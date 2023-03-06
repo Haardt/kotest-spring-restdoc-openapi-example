@@ -7,6 +7,7 @@ import com.epages.restdocs.apispec.WebTestClientRestDocumentationWrapper.resourc
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.extensions.spring.testContextManager
+import io.kotest.matchers.shouldBe
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -24,8 +25,8 @@ import org.springframework.test.web.reactive.server.WebTestClient
 )
 class ProfileRestApiTest : DescribeSpec({
 
-    describe("Test the profile rest api") {
-        it("blub") {
+    describe("A get request on the profile resource with a valid id") {
+        it("should return the profile dto") {
             getWinTestClient()
                 .get()
                 .uri("/api/profiles/{id}", "profileId")
@@ -33,6 +34,8 @@ class ProfileRestApiTest : DescribeSpec({
                 .exchange()
                 .expectStatus().isOk
                 .expectBody()
+                .jsonPath("id").isEqualTo("profileId")
+                .jsonPath("darkMode").isEqualTo(true)
                 .consumeWith(
                     document(
                         "GET/api/profiles/id",
@@ -43,7 +46,7 @@ class ProfileRestApiTest : DescribeSpec({
                         snippets = arrayOf(
                             requestHeaders(
                                 headerWithName("Content-Type")
-                                    .description("The version definition. Compatible with V2")
+                                    .description("The GET is compatible with V2")
                             ),
                             pathParameters(
                                 parameterWithName("id")
