@@ -3,6 +3,7 @@ package com.conpinion.restdocexample
 import com.epages.restdocs.apispec.Schema
 import com.epages.restdocs.apispec.WebTestClientRestDocumentationWrapper
 import com.epages.restdocs.apispec.WebTestClientRestDocumentationWrapper.document
+import com.epages.restdocs.apispec.WebTestClientRestDocumentationWrapper.resourceDetails
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.extensions.spring.testContextManager
@@ -35,7 +36,7 @@ class ProfileRestApiTest : DescribeSpec({
                 .consumeWith(
                     document(
                         "GET/api/profiles/id",
-                        resourceDetails = WebTestClientRestDocumentationWrapper.resourceDetails()
+                        resourceDetails = resourceDetails()
                             .responseSchema(Schema("profile"))
                             .description("""This resource return the profile for the given id.""".trimMargin())
                             .summary("Get the profile data."),
